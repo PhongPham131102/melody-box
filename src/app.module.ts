@@ -6,10 +6,21 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggerInterceptor } from './interceptors/logger.interceptor';
 import { ErrorInterceptor } from './interceptors/handleError.interceptor';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
+import { PermissionModule } from './modules/permission/permission.module';
+import { RoleModule } from './modules/role/role.module';
+import { ActionHistoryModule } from './modules/action-history/action-history.module';
+import { JwtModule } from '@nestjs/jwt';
+import { LoggingInterceptor } from './interceptors/save-logging.interceptor';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    JwtModule.register({
+      global: true,
+      secret: process.env.JWT_SECRET_KEY,
+      signOptions: { expiresIn: process.env.EXPIRES_ACCESS_TOKEN_JWT },
+    }),
     UserModule,
     MongooseModule.forRoot(process.env.DATABASE_URL, {
       retryAttempts: 10, // thử kết nối 10 lần nếu thất bại
@@ -28,6 +39,10 @@ import { HttpExceptionFilter } from './filters/http-exception.filter';
         return db;
       },
     }),
+    PermissionModule,
+    RoleModule,
+    ActionHistoryModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [
@@ -42,6 +57,10 @@ import { HttpExceptionFilter } from './filters/http-exception.filter';
     {
       provide: APP_INTERCEPTOR,
       useClass: LoggerInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
     },
   ],
 })

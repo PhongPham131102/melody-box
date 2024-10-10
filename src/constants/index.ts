@@ -18,7 +18,7 @@ export const usersDefault = [
     username: 'admin',
     password: '$2b$10$40vlq7LOwZxDVaJzgSOIEuvbW4Idso1qC7q1EH1bE3m8pVoQa6B5i',
     name: 'Admin',
-    email: 'admin@okvip.com',
+    email: 'admin@gmail.com',
     role: '659ba7c62b611171a5347a97',
     isDelete: false,
   },

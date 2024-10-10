@@ -4,6 +4,7 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
 
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { useContainer } from 'class-validator';
 
 const logger = new Logger('Application');
 const version = 'v1';
@@ -30,6 +31,14 @@ async function bootstrap() {
       transform: true, // khi bật true thì dùng  thư viện class-transformer để chuyển đổi dữ liệu đầu vào , ví dụ: chuyển đổi chuỗi thành số,....
     }),
   );
+  // Cấu hình class-validator sử dụng container Dependency Injection của NestJS
+  // Điều này cho phép các custom validator trong class-validator có thể sử dụng các dịch vụ từ NestJS
+  // Bằng cách này, có thể tiêm các providers hoặc services của NestJS vào các custom validator,
+  // giúp chúng dễ dàng truy cập vào các tài nguyên như cơ sở dữ liệu, các module, hoặc các logic nghiệp vụ khác.
+  // Tham số fallbackOnErrors: true sẽ đảm bảo rằng nếu container không thể tiêm một phụ thuộc nào đó,
+  // nó sẽ quay về container mặc định để cố gắng giải quyết, giảm thiểu lỗi phát sinh do thiếu phụ thuộc.
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
+
   // thêm middleware cookieParser để có thể lấy cookie từ request
   app.use(cookieParser());
   // thêm middleware useBodyParser cho phép ứng dụng xử lý dữ liệu JSON từ HTTP Request

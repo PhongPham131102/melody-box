@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
 
 import { NestExpressApplication } from '@nestjs/platform-express';
@@ -20,6 +20,11 @@ async function bootstrap() {
     credentials: true,
     optionsSuccessStatus: 204,
   });
+  // cài đặt version cho ứng dụng
+  app.enableVersioning({
+    type: VersioningType.URI,
+  });
+
   // dùng global prefix cho toàn bộ ứng dụng đường dẫn là : api/version
   app.setGlobalPrefix(`api/${version}`);
   // dùng global pile để kiểm soát dữ liệu đầu vào cho body

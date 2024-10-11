@@ -12,6 +12,7 @@ import { ActionHistoryModule } from './modules/action-history/action-history.mod
 import { JwtModule } from '@nestjs/jwt';
 import { LoggingInterceptor } from './interceptors/save-logging.interceptor';
 import { AuthModule } from './modules/auth/auth.module';
+import { Mp3ApiModule } from './modules/mp3-api/mp3-api.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { AuthModule } from './modules/auth/auth.module';
     RoleModule,
     ActionHistoryModule,
     AuthModule,
+    Mp3ApiModule,
   ],
   controllers: [],
   providers: [

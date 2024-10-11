@@ -3,6 +3,10 @@ export const roleDefault = [
     _id: '659ba7c62b611171a5347a97',
     name: 'Admin',
   },
+  {
+    _id: '659ba7c62b611171a5347a96',
+    name: 'Người dùng',
+  },
 ];
 export const permisstionDefault = [
   {
@@ -10,6 +14,12 @@ export const permisstionDefault = [
     role: '659ba7c62b611171a5347a97',
     action: ['manage'],
     subject: 'all',
+  },
+  {
+    _id: '65a0a995aa7ea10ac4d16931',
+    role: '659ba7c62b611171a5347a96',
+    action: ['read'],
+    subject: 'user',
   },
 ];
 export const usersDefault = [

@@ -6,6 +6,8 @@ import * as cookieParser from 'cookie-parser';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { useContainer } from 'class-validator';
 
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
 const logger = new Logger('Application');
 
 async function bootstrap() {
@@ -52,7 +54,14 @@ async function bootstrap() {
     limit: '80mb', // dùng để thiết lập kích thước tối đa của body request mà body-parser sẽ chấp nhận, ở đây tối đa là 80MB
     type: 'application/json', // chỉ xử lý các yêu cầu có Content-Type là 'application/json'
   });
-
+  const configSwagger = new DocumentBuilder()
+    .setTitle('Melody Box API')
+    .setDescription('API Documents for Melody Box Application')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+  const document = SwaggerModule.createDocument(app, configSwagger);
+  SwaggerModule.setup('api/docs', app, document);
   //khai báo port cho ứng dụng
   const port = process.env.PORT || 5202;
   await app.listen(port).then(() => {

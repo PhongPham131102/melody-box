@@ -13,6 +13,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { LoggingInterceptor } from './interceptors/save-logging.interceptor';
 import { AuthModule } from './modules/auth/auth.module';
 import { Mp3ApiModule } from './modules/mp3-api/mp3-api.module';
+import { YoutubeApiModule } from './modules/youtube-api/youtube-api.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { Mp3ApiModule } from './modules/mp3-api/mp3-api.module';
     ActionHistoryModule,
     AuthModule,
     Mp3ApiModule,
+    YoutubeApiModule,
   ],
   controllers: [],
   providers: [

@@ -81,61 +81,56 @@ export class AuthService {
     userIp: string,
     response: Response,
   ) {
-    try {
-      const { username, password } = _user;
-      const user = await this.userService.findByUsername(username);
+    const { username, password } = _user;
+    const user = await this.userService.findByUsername(username);
 
-      if (!user)
-        throw new HttpException(
-          {
-            status: StatusResponse.USERNAME_OR_PASSWORD_IS_NOT_CORRECT,
-            message: 'User Name Or Password Is Not Correct',
-          },
-          HttpStatus.BAD_REQUEST,
-        );
-      const checkPassword = await this.userService.checkPassword(
-        password,
-        user.password,
+    if (!user)
+      throw new HttpException(
+        {
+          status: StatusResponse.USERNAME_OR_PASSWORD_IS_NOT_CORRECT,
+          message: 'User Name Or Password Is Not Correct',
+        },
+        HttpStatus.BAD_REQUEST,
       );
-      if (!checkPassword)
-        throw new HttpException(
-          {
-            status: StatusResponse.USERNAME_OR_PASSWORD_IS_NOT_CORRECT,
-            message: 'User Name Or Password Is Not Correct',
-          },
-          HttpStatus.BAD_REQUEST,
-        );
-      const permission = await this.userService.getUserById(user.id);
-      const payload = {
-        username,
-        email: user.email,
-        user_id: user._id,
-      };
-      const accessToken = await this.jwtService.signAsync(payload);
-      await this.handleRefreshToken(payload, user._id, response);
+    const checkPassword = await this.userService.checkPassword(
+      password,
+      user.password,
+    );
+    if (!checkPassword)
+      throw new HttpException(
+        {
+          status: StatusResponse.USERNAME_OR_PASSWORD_IS_NOT_CORRECT,
+          message: 'User Name Or Password Is Not Correct',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    const permission = await this.userService.getUserById(user.id);
+    const payload = {
+      username,
+      email: user.email,
+      user_id: user._id,
+    };
+    const accessToken = await this.jwtService.signAsync(payload);
+    await this.handleRefreshToken(payload, user._id, response);
 
-      const userData = {
-        username: user.username,
-        name: user.name,
-      };
-      const stringLog = `${user?.username} vừa đăng nhập.\nVào lúc: <b>${formatDate(
-        new Date(),
-      )}</b>\nIP người thực hiện: ${userIp}.`;
-      request['message-log'] = stringLog;
-      request['user'] = user;
-      return {
-        accessToken,
-        userId: user._id,
-        status: StatusResponse.SUCCESS,
-        message: 'Login Success',
-        role: permission.role,
-        permission: permission.permission,
-        userData,
-      };
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
+    const userData = {
+      username: user.username,
+      name: user.name,
+    };
+    const stringLog = `${user?.username} vừa đăng nhập.\nVào lúc: <b>${formatDate(
+      new Date(),
+    )}</b>\nIP người thực hiện: ${userIp}.`;
+    request['message-log'] = stringLog;
+    request['user'] = user;
+    return {
+      accessToken,
+      userId: user._id,
+      status: StatusResponse.SUCCESS,
+      message: 'Login Success',
+      role: permission.role,
+      permission: permission.permission,
+      userData,
+    };
   }
   logout = async (user: UserDocument, response: Response) => {
     await this.userService.updateRefreshToken({

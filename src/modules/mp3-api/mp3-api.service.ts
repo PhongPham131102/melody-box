@@ -3,10 +3,6 @@ import axios from 'axios';
 import * as crypto from 'crypto';
 @Injectable()
 export class Mp3ApiService {
-  async onModuleInit() {
-    const data = await this.getSong('ZOACFBBU');
-    console.log('data: ', data);
-  }
   private VERSION = '1.6.34';
   private URL = 'https://zingmp3.vn';
   private SECRET_KEY = '2aa2d1c561e809b267f3638c4a307aab';

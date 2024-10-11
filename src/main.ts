@@ -7,7 +7,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { useContainer } from 'class-validator';
 
 const logger = new Logger('Application');
-const version = 'v1';
+
 async function bootstrap() {
   //khởi tạo server với một số cài đặt như chỉ hiển thị logger cho toàn bộ ứng dụng gồm error, verbose, warn, debug
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -20,13 +20,13 @@ async function bootstrap() {
     credentials: true,
     optionsSuccessStatus: 204,
   });
+  app.setGlobalPrefix('api');
   // cài đặt version cho ứng dụng
   app.enableVersioning({
     type: VersioningType.URI,
+    defaultVersion: process.env.CURRENT_VERSION,
   });
 
-  // dùng global prefix cho toàn bộ ứng dụng đường dẫn là : api/version
-  app.setGlobalPrefix(`api/${version}`);
   // dùng global pile để kiểm soát dữ liệu đầu vào cho body
   app.useGlobalPipes(
     new ValidationPipe({
@@ -52,6 +52,7 @@ async function bootstrap() {
     limit: '80mb', // dùng để thiết lập kích thước tối đa của body request mà body-parser sẽ chấp nhận, ở đây tối đa là 80MB
     type: 'application/json', // chỉ xử lý các yêu cầu có Content-Type là 'application/json'
   });
+
   //khai báo port cho ứng dụng
   const port = process.env.PORT || 5202;
   await app.listen(port).then(() => {

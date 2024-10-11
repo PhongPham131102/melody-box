@@ -20,11 +20,17 @@ import { Authentication } from 'src/decorators/authentication.decorator';
 import { AuthUser } from 'src/decorators/auth-user.decorator';
 import { UserDocument } from '../user/user.entity';
 import { SubjectEnum } from 'src/enums/index.enum';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 
+@ApiTags('Authentication')
 @Controller('auths')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @ApiOperation({ summary: 'User registration' })
+  @ApiResponse({ status: 201, description: 'User successfully registered.' })
+  @ApiResponse({ status: 400, description: 'Invalid input data.' })
+  @ApiBody({ type: CreateUserDto })
   @Logging('Đăng ký tài khoản mới', ActionLogEnum.REGISTER, SubjectEnum.USER)
   @Post('/sign-up')
   signUp(
@@ -35,6 +41,10 @@ export class AuthController {
     return this.authService.signUp(createUserDto, request, userIp);
   }
 
+  @ApiOperation({ summary: 'User login' })
+  @ApiResponse({ status: 200, description: 'User successfully logged in.' })
+  @ApiResponse({ status: 401, description: 'Unauthorized.' })
+  @ApiBody({ type: LoginUserDto })
   @Logging('Đăng nhập', ActionLogEnum.LOGIN, SubjectEnum.USER)
   @HttpCode(200)
   @Post('/sign-in')
@@ -47,6 +57,8 @@ export class AuthController {
     return this.authService.signIn(user, request, userIp, response);
   }
 
+  @ApiOperation({ summary: 'User logout' })
+  @ApiResponse({ status: 204, description: 'User successfully logged out.' })
   @Authentication()
   @Post('logout')
   @HttpCode(204)
@@ -57,6 +69,9 @@ export class AuthController {
     return await this.authService.logout(user, response);
   }
 
+  @ApiOperation({ summary: 'Refresh access token' })
+  @ApiResponse({ status: 200, description: 'New access token generated.' })
+  @ApiResponse({ status: 400, description: 'Invalid refresh token.' })
   @Get('refresh-token')
   async handleRefreshToken(
     @Req() request: any,

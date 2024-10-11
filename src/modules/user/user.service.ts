@@ -41,7 +41,7 @@ export class UserService {
     return await this.userModel.findOne(filter);
   }
   async checkEmail(email: string) {
-    const user = await this.userModel.findOne({ email, isDelete: false });
+    const user = await this.userModel.findOne({ email });
     return user;
   }
   async findOneById(id: string) {
@@ -53,11 +53,11 @@ export class UserService {
     }
   }
   async checkUsername(username: string) {
-    const user = await this.userModel.findOne({ username, isDelete: false });
+    const user = await this.userModel.findOne({ username });
     return user;
   }
   async findByUsername(username: string) {
-    const user = await this.userModel.findOne({ username, isDelete: false });
+    const user = await this.userModel.findOne({ username });
     return user;
   }
   async checkPassword(password: string, hashPassword: string) {
@@ -69,7 +69,7 @@ export class UserService {
       return null;
     }
     const user = await this.userModel
-      .findOne({ _id: new Types.ObjectId(id), isDelete: false })
+      .findOne({ _id: new Types.ObjectId(id) })
       .populate('role');
     const findPermission = await this.permissionService.getPermissionByRole(
       user.role._id,
@@ -140,7 +140,7 @@ export class UserService {
       return null;
     }
     const user = await this.userModel
-      .findOne({ _id: new Types.ObjectId(id), isDelete: false })
+      .findOne({ _id: new Types.ObjectId(id) })
       .populate([{ path: 'role', select: '_id name' }]);
 
     const findPermission = await this.permissionService.getPermissionByRole(

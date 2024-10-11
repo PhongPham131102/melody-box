@@ -14,7 +14,7 @@ import { Request } from 'express';
 import { StatusResponse } from 'src/common/StatusResponse';
 import { formatDate } from 'src/common';
 import { Response } from 'express';
-import ms from 'ms';
+import * as ms from 'ms';
 import { UserDocument } from '../user/user.entity';
 
 @Injectable()
@@ -142,10 +142,10 @@ export class AuthService {
       httpOnly: true,
       sameSite: 'none',
       secure: true,
-      path: '/', // Ensure the path is consistent
+      path: '/',
     });
 
-    return 'ok';
+    return true;
   };
   processNewToken = async (refresh_token: string, response: Response) => {
     try {
@@ -215,7 +215,7 @@ export class AuthService {
       httpOnly: true,
       sameSite: 'none',
       secure: true,
-      path: '/', // Ensure the path is consistent
+      path: '/',
     };
 
     response.cookie('refresh_token', newRefreshToken, refreshTokenOptions);

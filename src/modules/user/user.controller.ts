@@ -1,10 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { UserService } from './user.service';
 
-@Controller({
-  path: 'users',
-  version: '1',
-})
+@Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 }

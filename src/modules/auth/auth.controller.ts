@@ -20,7 +20,8 @@ import { Authentication } from 'src/decorators/authentication.decorator';
 import { AuthUser } from 'src/decorators/auth-user.decorator';
 import { UserDocument } from '../user/user.entity';
 import { SubjectEnum } from 'src/enums/index.enum';
-@Controller({ path: 'auths', version: '1' })
+
+@Controller('auths')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 

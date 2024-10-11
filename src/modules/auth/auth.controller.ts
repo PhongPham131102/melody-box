@@ -49,6 +49,7 @@ export class AuthController {
 
   @Authentication()
   @Post('logout')
+  @HttpCode(204)
   async handleLogout(
     @AuthUser() user: UserDocument,
     @Res({ passthrough: true }) response: Response,
@@ -62,7 +63,6 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ) {
     const refresh_token = request.cookies['refresh_token'];
-
     return await this.authService.processNewToken(refresh_token, response);
   }
 }

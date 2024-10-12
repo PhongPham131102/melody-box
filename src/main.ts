@@ -61,7 +61,7 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, configSwagger);
-  SwaggerModule.setup('api/docs', app, document);
+  SwaggerModule.setup('api/v1/docs', app, document);
   //khai báo port cho ứng dụng
   const port = process.env.PORT || 5202;
   await app.listen(port).then(() => {

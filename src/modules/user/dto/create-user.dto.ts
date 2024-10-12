@@ -8,6 +8,7 @@ export class CreateUserDto {
     description: 'Username of the user',
     required: true,
     type: String,
+    example: 'your-user-name',
   })
   @IsNotEmpty({ message: 'User Name Is Not Empty' })
   @IsString({ message: 'Please Enter User Name' })
@@ -17,6 +18,7 @@ export class CreateUserDto {
     description: 'Password of the user',
     required: true,
     type: String,
+    example: 'd0gsaremybestfr13nds',
   })
   @IsNotEmpty({ message: 'Password Is Not Empty' })
   @IsString({ message: 'Please Enter Password' })
@@ -26,6 +28,7 @@ export class CreateUserDto {
     description: 'Full name of the user',
     required: true,
     type: String,
+    example: 'Nguyen Van A',
   })
   @IsNotEmpty({ message: 'Your Full Name Is Not Empty' })
   @IsString({ message: 'Please Enter Your Full Name' })
@@ -35,6 +38,7 @@ export class CreateUserDto {
     description: 'Email of the user',
     required: false,
     type: String,
+    example: 'example@gmail.com',
   })
   @IsOptional()
   @IsEmail()
@@ -44,6 +48,7 @@ export class CreateUserDto {
     description: 'Role ID of the user',
     required: true,
     type: String,
+    example: '507f1f77bcf86cd799439011',
   })
   @IsNotEmpty({ message: 'Your Role Is Not Empty' })
   @IsString({ message: 'Please Select Your Role' })

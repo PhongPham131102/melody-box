@@ -7,6 +7,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { useContainer } from 'class-validator';
 
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { errorResponses } from './errors/error-response.index';
 
 const logger = new Logger('Application');
 
@@ -60,7 +61,9 @@ async function bootstrap() {
     .setVersion('1.0')
     .addBearerAuth()
     .build();
-  const document = SwaggerModule.createDocument(app, configSwagger);
+  const document = SwaggerModule.createDocument(app, configSwagger, {
+    extraModels: errorResponses,
+  });
   SwaggerModule.setup('api/v1/docs', app, document);
   //khai báo port cho ứng dụng
   const port = process.env.PORT || 5202;

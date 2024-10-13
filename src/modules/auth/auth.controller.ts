@@ -228,6 +228,73 @@ export class AuthController {
       },
     },
   })
+  @ApiOperation({
+    summary: 'Refresh access token',
+    operationId: 'refreshToken',
+    description:
+      'Generates a new access token and updates the refresh token using the provided refresh token. This endpoint checks the validity of the provided refresh token and re-issues tokens accordingly.',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'New access token generated successfully.',
+    schema: {
+      example: {
+        accessToken: 'new_jwt_token_here',
+        status: 'SUCCESS',
+      },
+    },
+  })
+  @ApiResponse({
+    status: 400,
+    description:
+      'Bad Request. The provided refresh token is missing or invalid.',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          properties: {
+            statusCode: { type: 'integer', example: 400 },
+            message: { type: 'string', example: 'Invalid refresh token' },
+            error: { type: 'string', example: 'Bad Request' },
+          },
+        },
+        examples: {
+          MissingToken: {
+            summary: 'No refresh token provided',
+            value: {
+              statusCode: 400,
+              message: 'Could not find refresh token',
+              error: 'Bad Request',
+            },
+          },
+          InvalidToken: {
+            summary: 'Provided refresh token is invalid',
+            value: {
+              statusCode: 400,
+              message: 'Invalid refresh token',
+              error: 'Bad Request',
+            },
+          },
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized. The provided refresh token has expired.',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          properties: {
+            statusCode: { type: 'integer', example: 401 },
+            message: { type: 'string', example: 'EXPIRED_REFRESH_TOKEN' },
+            error: { type: 'string', example: 'Unauthorized' },
+          },
+        },
+      },
+    },
+  })
   @Get('refresh-token')
   async handleRefreshToken(
     @Req() request: any,

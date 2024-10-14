@@ -22,9 +22,11 @@ export class RoleService {
           await this.roleModel.create(data);
         }
       }
-      this.logger.verbose('Khởi tạo data cho role entity thành công');
+      this.logger.verbose('Init mock data for role entity success!');
     } catch (error) {
-      this.logger.error('Không thể khởi tạo data cho role entity');
+      this.logger.error(
+        `Init mock data for role entity failed - error ${error}`,
+      );
     }
   }
   async checkRoleById(id: string) {

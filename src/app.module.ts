@@ -31,11 +31,11 @@ import { YoutubeApiModule } from './modules/youtube-api/youtube-api.module';
         const logger = new Logger('DATABASE');
         db.on('connected', () => {
           logger.verbose(
-            `Kết nối cơ sở dữ liệu ${process.env.DATABASE_URL} thành công`,
+            `Connect to database ${process.env.DATABASE_URL} success!`,
           );
         });
         db.on('error', (error) => {
-          logger.error(`Kết nối cơ sở dữ liệu thất bại: ${error.message}`);
+          logger.error(`Connect to database failed - error ${error.message}`);
         });
         db._events.connected();
         return db;

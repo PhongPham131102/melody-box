@@ -30,11 +30,9 @@ export class UserService {
           _id: new Types.ObjectId(user._id),
         });
       }
-      this.logger.verbose(
-        'Khởi tạo người dùng mặc định cho hệ thống thành công!',
-      );
+      this.logger.verbose('Init mock data for user entity success!');
     } catch (error) {
-      this.logger.error('Khởi tạo người dùng mặc định cho hệ thống thất bại!');
+      this.logger.error(`Init mock data for user entity fail - error ${error}`);
     }
   }
   async findOneBy(filter: FilterQuery<UserDocument>) {

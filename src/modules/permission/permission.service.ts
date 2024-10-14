@@ -53,9 +53,11 @@ export class PermissionService {
           }
         }
       }
-      this.logger.verbose('Khởi tạo data cho permission entity thành công');
+      this.logger.verbose('Init mock data for permission entity success!');
     } catch (error) {
-      this.logger.error('Không thể khởi tạo data cho permission entity');
+      this.logger.error(
+        `Init mock data for permission entity failed - eror ${error}`,
+      );
     }
   }
   async getPermissionByRole(roleId: Types.ObjectId) {

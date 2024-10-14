@@ -68,7 +68,7 @@ async function bootstrap() {
   //khai báo port cho ứng dụng
   const port = process.env.PORT || 5202;
   await app.listen(port).then(() => {
-    logger.verbose(`Hệ thống đang chạy ở cổng : ${port}`);
+    logger.verbose(`System running on port ${port}`);
   });
 }
 bootstrap();

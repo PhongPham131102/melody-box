@@ -8,14 +8,19 @@ import { useContainer } from 'class-validator';
 
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { errorResponses } from './errors/error-response.index';
+import { CustomLoggerService } from './loggers/custom-logger.service';
 
 const logger = new Logger('Application');
 
 async function bootstrap() {
+  const customLogger = new CustomLoggerService();
+  customLogger.setLogLevels(['error', 'verbose', 'warn', 'debug']);
+
   //khởi tạo server với một số cài đặt như chỉ hiển thị logger cho toàn bộ ứng dụng gồm error, verbose, warn, debug
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    logger: ['error', 'verbose', 'warn', 'debug'],
+    logger: customLogger,
   });
+
   // bật cors cho ứng dụng và chấp nhận toàn bộ origin, chấp nhận cookie và trả về 204 status khi method là option
   app.enableCors({
     origin:

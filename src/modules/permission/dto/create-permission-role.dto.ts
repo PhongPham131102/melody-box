@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsString,
   ValidateNested,
@@ -53,10 +54,28 @@ export function IsEnumValid(validationOptions?: ValidationOptions) {
 }
 
 export class CreatePermissionRoleDto {
+  @ApiProperty({
+    description: 'The name of the role to be created',
+    example: 'Manager',
+  })
   @IsString()
   @IsNotEmpty()
   role: string;
-
+  @ApiProperty({
+    description: 'Permissions assigned to the role, organized by subject',
+    example: {
+      user: ['create', 'read', 'update'],
+      product: ['read'],
+    },
+    type: 'object',
+    additionalProperties: {
+      type: 'array',
+      items: {
+        type: 'string',
+        enum: Object.values(ActionEnum),
+      },
+    },
+  })
   @ValidateNested()
   @IsEnumValid()
   permission: { [key in SubjectEnum]: ActionEnum[] };

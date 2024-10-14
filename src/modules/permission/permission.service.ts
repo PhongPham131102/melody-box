@@ -311,10 +311,10 @@ export class PermissionService {
     if (!role)
       throw new HttpException(
         {
-          status: StatusResponse.NOT_EXISTS_ROLE,
-          message: `Role Id : ${id} Not Exists`,
+          status: StatusResponse.FAIL,
+          message: `Not Found Role By Id: ${role}`,
         },
-        HttpStatus.BAD_GATEWAY,
+        HttpStatus.BAD_REQUEST,
       );
     const checkRoleName = await this.roleModel.findOne({
       _id: { $ne: role._id },

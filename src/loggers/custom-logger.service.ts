@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
 import { LoggerService, Injectable, LogLevel } from '@nestjs/common';
 import { blue, red, yellow, green, cyan, bold } from 'colorette';
 import * as moment from 'moment';

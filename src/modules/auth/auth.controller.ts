@@ -18,7 +18,7 @@ import { GetClientIP } from 'src/decorators/userIp.decorator';
 import { Response } from 'express';
 import { Authentication } from 'src/decorators/authentication.decorator';
 import { AuthUser } from 'src/decorators/auth-user.decorator';
-import { UserDocument } from '../user/user.entity';
+import { UserDocument } from '../../database/entity/user.entity';
 import { SubjectEnum } from 'src/enums/index.enum';
 import { ApiTags } from '@nestjs/swagger';
 import {

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User, UserDocument } from './user.entity';
+import { User, UserDocument } from '../../database/entity/user.entity';
 import { FilterQuery, Model, Types } from 'mongoose';
 import { PermissionService } from '../permission/permission.service';
 import { usersDefault } from 'src/constants';

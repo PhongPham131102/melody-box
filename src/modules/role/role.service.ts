@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Role, RoleDocument } from './role.entity';
+import { Role, RoleDocument } from '../../database/entity/role.entity';
 import { Model, Types } from 'mongoose';
 import { adminRole, roleDefault } from 'src/constants';
 

@@ -9,14 +9,14 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model, Types } from 'mongoose';
 import { CreatePermissionDto } from './dto/create-permisstion.dto';
-import { Role, RoleDocument } from '../role/role.entity';
+import { Role, RoleDocument } from '../../database/entity/role.entity';
 import { UpdatePermisstionDto } from './dto/update-permisstion.dto';
 import { CreatePermissionRoleDto } from './dto/create-permission-role.dto';
 import { UpdatePermissionRoleDto } from './dto/update-permission-role.dto';
 import { adminRole, permisstionDefault } from 'src/constants';
 import { Request } from 'express';
-import { UserDocument } from '../user/user.entity';
-import { Permission, PermissionDocument } from './permission.entity';
+import { UserDocument } from '../../database/entity/user.entity';
+
 import { StatusResponse } from 'src/common/StatusResponse';
 import { formatDate } from 'src/common';
 import {
@@ -24,6 +24,10 @@ import {
   actionMapping,
   subjectMapping,
 } from 'src/enums/index.enum';
+import {
+  Permission,
+  PermissionDocument,
+} from 'src/database/entity/permission.entity';
 
 @Injectable()
 export class PermissionService {

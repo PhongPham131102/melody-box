@@ -15,7 +15,7 @@ import { StatusResponse } from 'src/common/StatusResponse';
 import { formatDate } from 'src/common';
 import { Response } from 'express';
 import * as ms from 'ms';
-import { UserDocument } from '../user/user.entity';
+import { UserDocument } from '../../database/entity/user.entity';
 
 @Injectable()
 export class AuthService {

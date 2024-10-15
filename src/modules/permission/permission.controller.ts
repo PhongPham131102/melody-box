@@ -12,7 +12,7 @@ import { PermissionService } from './permission.service';
 import { Authorization } from 'src/decorators/authorization.decorator';
 import { ActionEnum, SubjectEnum } from 'src/enums/index.enum';
 import { AuthUser } from 'src/decorators/auth-user.decorator';
-import { UserDocument } from '../user/user.entity';
+import { UserDocument } from '../../database/entity/user.entity';
 import { CreatePermissionRoleDto } from './dto/create-permission-role.dto';
 import { GetClientIP } from 'src/decorators/userIp.decorator';
 import { Request } from 'express';

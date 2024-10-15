@@ -1,12 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { ActionHistory, ActionHistoryDocument } from './action-history.entity';
+
 import { Model } from 'mongoose';
-import { UserDocument } from '../user/user.entity';
+import { UserDocument } from '../../database/entity/user.entity';
 import { ActionLogEnum } from 'src/enums/ActionLog.enum';
 
 import { SubjectEnum } from 'src/enums/index.enum';
+import {
+  ActionHistory,
+  ActionHistoryDocument,
+} from 'src/database/entity/action-history.entity';
 
 @Injectable()
 export class ActionHistoryService {

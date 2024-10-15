@@ -17,9 +17,9 @@ export class YoutubeApiService {
     this.SECRET_KEY = process.env.YOUTUBE_SECRET_KEY;
   }
   async onModuleInit() {
-    const response: ResponseSearchResultInterface =
-      await this.getListIdVideoBySearch({ q: 'mtp' });
-    await this.getListVideoByListIdVideo({ ids: response.items });
+    // const response: ResponseSearchResultInterface =
+    //   await this.getListIdVideoBySearch({ q: 'mtp' });
+    // await this.getListVideoByListIdVideo({ ids: response.items });
   }
   async search(search: string) {}
   async getListIdVideoBySearch({

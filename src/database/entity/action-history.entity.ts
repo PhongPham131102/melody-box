@@ -1,8 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
-import { User, UserDocument } from '../user/user.entity';
+
 import { ActionLogEnum } from 'src/enums/ActionLog.enum';
 import { SubjectEnum } from 'src/enums/index.enum';
+import { User, UserDocument } from './user.entity';
 
 export type ActionHistoryDocument = HydratedDocument<ActionHistory>;
 @Schema({ timestamps: true })

@@ -1,6 +1,5 @@
-import { Logger, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { UserModule } from './modules/user/user.module';
-import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggerInterceptor } from './interceptors/logger.interceptor';
@@ -14,6 +13,7 @@ import { LoggingInterceptor } from './interceptors/save-logging.interceptor';
 import { AuthModule } from './modules/auth/auth.module';
 import { Mp3ApiModule } from './modules/mp3-api/mp3-api.module';
 import { YoutubeApiModule } from './modules/youtube-api/youtube-api.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
@@ -24,23 +24,7 @@ import { YoutubeApiModule } from './modules/youtube-api/youtube-api.module';
       signOptions: { expiresIn: process.env.EXPIRES_ACCESS_TOKEN_JWT },
     }),
     UserModule,
-    MongooseModule.forRoot(process.env.DATABASE_URL, {
-      retryAttempts: 10, // thử kết nối 10 lần nếu thất bại
-      retryDelay: 5000, //chờ 5s trước khi thử kết nối lại
-      connectionFactory: (db) => {
-        const logger = new Logger('DATABASE');
-        db.on('connected', () => {
-          logger.verbose(
-            `Connect to database ${process.env.DATABASE_URL} success!`,
-          );
-        });
-        db.on('error', (error) => {
-          logger.error(`Connect to database failed - error ${error.message}`);
-        });
-        db._events.connected();
-        return db;
-      },
-    }),
+    DatabaseModule,
     PermissionModule,
     RoleModule,
     ActionHistoryModule,

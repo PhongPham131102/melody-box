@@ -2,6 +2,13 @@ import { Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
+import { Permission, PermissionSchema } from './entity/permission.entity';
+import { Role, RoleSchema } from './entity/role.entity';
+import { PermissionSeeder } from './seed/permission.seed';
+import { UserSeeder } from './seed/user.seed';
+import { User, UserSchema } from './entity/user.entity';
+import { RoleSeed } from './seed/role.seed';
+
 @Module({
   imports: [
     MongooseModule.forRootAsync({
@@ -33,7 +40,13 @@ import { MongooseModule } from '@nestjs/mongoose';
         },
       }),
     }),
+    MongooseModule.forFeature([
+      { name: Permission.name, schema: PermissionSchema },
+      { name: Role.name, schema: RoleSchema },
+      { name: User.name, schema: UserSchema },
+    ]),
   ],
+  providers: [PermissionSeeder, UserSeeder, RoleSeed],
   exports: [MongooseModule],
 })
 export class DatabaseModule {}

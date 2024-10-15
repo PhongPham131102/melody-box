@@ -13,7 +13,7 @@ import { Role, RoleDocument } from '../../database/entity/role.entity';
 import { UpdatePermisstionDto } from './dto/update-permisstion.dto';
 import { CreatePermissionRoleDto } from './dto/create-permission-role.dto';
 import { UpdatePermissionRoleDto } from './dto/update-permission-role.dto';
-import { adminRole, permisstionDefault } from 'src/constants';
+import { adminRole } from 'src/constants';
 import { Request } from 'express';
 import { UserDocument } from '../../database/entity/user.entity';
 
@@ -38,32 +38,7 @@ export class PermissionService {
     private readonly roleModel: Model<RoleDocument>,
   ) {}
   private readonly logger = new Logger(PermissionService.name);
-  onModuleInit() {
-    this.initPermissionEntity();
-  }
-  async initPermissionEntity() {
-    try {
-      const check = await this.permissionModel.countDocuments();
-      if (check === 0) {
-        for (const data of permisstionDefault) {
-          const existingPermisstion = await this.permissionModel.findById(
-            new Types.ObjectId(data._id),
-          );
-          if (!existingPermisstion) {
-            await this.permissionModel.create({
-              ...data,
-              role: new Types.ObjectId(data?.role),
-            });
-          }
-        }
-      }
-      this.logger.verbose('Init mock data for permission entity success!');
-    } catch (error) {
-      this.logger.error(
-        `Init mock data for permission entity failed - eror ${error}`,
-      );
-    }
-  }
+
   async getPermissionByRole(roleId: Types.ObjectId) {
     return this.permissionModel.find({ role: roleId }).populate('role', 'name');
   }

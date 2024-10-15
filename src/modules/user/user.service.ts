@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from '../../database/entity/user.entity';
 import { FilterQuery, Model, Types } from 'mongoose';
 import { PermissionService } from '../permission/permission.service';
-import { usersDefault } from 'src/constants';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './dto/create-user.dto';
 import { StatusResponse } from 'src/common/StatusResponse';
@@ -16,25 +15,6 @@ export class UserService {
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private readonly permissionService: PermissionService,
   ) {}
-  private readonly logger = new Logger(UserService.name);
-  async onModuleInit() {
-    try {
-      for (const user of usersDefault) {
-        const checkUser = await this.userModel.findById(
-          new Types.ObjectId(user._id),
-        );
-        if (checkUser) continue;
-        await this.userModel.create({
-          ...user,
-          role: new Types.ObjectId(user.role),
-          _id: new Types.ObjectId(user._id),
-        });
-      }
-      this.logger.verbose('Init mock data for user entity success!');
-    } catch (error) {
-      this.logger.error(`Init mock data for user entity fail - error ${error}`);
-    }
-  }
   async findOneBy(filter: FilterQuery<UserDocument>) {
     return await this.userModel.findOne(filter);
   }

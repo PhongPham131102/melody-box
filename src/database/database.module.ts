@@ -8,6 +8,10 @@ import { PermissionSeeder } from './seed/permission.seed';
 import { UserSeeder } from './seed/user.seed';
 import { User, UserSchema } from './entity/user.entity';
 import { RoleSeed } from './seed/role.seed';
+import {
+  ActionHistory,
+  ActionHistorySchema,
+} from './entity/action-history.entity';
 
 @Module({
   imports: [
@@ -44,6 +48,7 @@ import { RoleSeed } from './seed/role.seed';
       { name: Permission.name, schema: PermissionSchema },
       { name: Role.name, schema: RoleSchema },
       { name: User.name, schema: UserSchema },
+      { name: ActionHistory.name, schema: ActionHistorySchema },
     ]),
   ],
   providers: [PermissionSeeder, UserSeeder, RoleSeed],
